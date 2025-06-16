@@ -23,7 +23,6 @@ class Index extends Component
 
     public function confirmDelete($id)
     {
-        logger('User confirmed deletion of Jabatan with ID: ' . $id);
         $this->showDeleteModal = true;
         $this->jabatanToDelete = $id;
     }

@@ -26,6 +26,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('jabatan/create', \App\Livewire\Jabatan\Create::class)->name('jabatan.create');
     Route::get('jabatan/{id}/edit', \App\Livewire\Jabatan\Edit::class)->name('jabatan.edit');
     Route::get('jabatan/{id}', \App\Livewire\Jabatan\Show::class)->name('jabatan.show');
+
+    // Unit Kerja Routes
+    Route::get('unit-kerja', \App\Livewire\UnitKerja\Index::class)->name('unit-kerja.index');
+    Route::get('unit-kerja/create', \App\Livewire\UnitKerja\Create::class)->name('unit-kerja.create');
+    Route::get('unit-kerja/{id}/edit', \App\Livewire\UnitKerja\Edit::class)->name('unit-kerja.edit');
+    Route::get('unit-kerja/{id}', \App\Livewire\UnitKerja\Show::class)->name('unit-kerja.show');
 });
 
 require __DIR__.'/auth.php';
