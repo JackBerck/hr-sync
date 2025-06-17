@@ -18,20 +18,11 @@
                     <flux:navlist.item icon="briefcase" :href="route('unit-kerja.index')" :current="request()->routeIs('unit-kerja')" wire:navigate>{{ __('Unit Kerja') }}</flux:navlist.item>
                     <flux:navlist.item icon="user" :href="route('pegawai.index')" :current="request()->routeIs('pegawai')" wire:navigate>{{ __('Pegawai') }}</flux:navlist.item>
                     <flux:navlist.item icon="hand-raised" :href="route('cuti.index')" :current="request()->routeIs('cuti')" wire:navigate>{{ __('Pengajuan Cuti') }}</flux:navlist.item>
+                    <flux:navlist.item icon="identification" :href="route('absensi.index')" :current="request()->routeIs('absensi')" wire:navigate>{{ __('Absensi') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
-
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
 
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">

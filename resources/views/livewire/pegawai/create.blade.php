@@ -132,7 +132,7 @@
                         @error('gaji')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                        <p class="mt-1 text-sm text-gray-500">Masukkan gaji pokok pegawai (sudah termasuk tunjangan)</p>
+                        <p class="mt-1 text-sm text-gray-500">Masukkan gaji pokok pegawai (belum termasuk tunjangan)</p>
                     </div>
 
                     {{-- Preview --}}

@@ -10,11 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', \App\Livewire\Dashboard::class)->name('dashboard');
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
@@ -44,6 +41,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('cuti/create', \App\Livewire\Cuti\Create::class)->name('cuti.create');
     Route::get('cuti/{id}/edit', \App\Livewire\Cuti\Edit::class)->name('cuti.edit');
     Route::get('cuti/{id}', \App\Livewire\Cuti\Show::class)->name('cuti.show');
+
+    // Absensi Routes
+    Route::get('absensi', \App\Livewire\Absensi\Index::class)->name('absensi.index');
+    Route::get('absensi/create', \App\Livewire\Absensi\Create::class)->name('absensi.create');
+    Route::get('absensi/{id}/edit', \App\Livewire\Absensi\Edit::class)->name('absensi.edit');
+    Route::get('absensi/{id}', \App\Livewire\Absensi\Show::class)->name('absensi.show');
 });
 
 require __DIR__.'/auth.php';

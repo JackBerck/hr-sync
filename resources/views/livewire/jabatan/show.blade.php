@@ -86,7 +86,7 @@
                                 <dt class="text-sm font-medium text-gray-500 mb-1">Dibuat Pada</dt>
                                 <dd class="text-sm text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
                                     <div class="flex flex-col">
-                                        <span>{{ $jabatan->created_at->format('d F Y') }}</span>
+                                        <span>{{ $jabatan->created_at->locale('id')->translatedFormat('d F Y') }}</span>
                                         <span
                                             class="text-xs text-gray-500">{{ $jabatan->created_at->format('H:i:s') }}</span>
                                     </div>
@@ -96,7 +96,7 @@
                                 <dt class="text-sm font-medium text-gray-500 mb-1">Terakhir Diupdate</dt>
                                 <dd class="text-sm text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
                                     <div class="flex flex-col">
-                                        <span>{{ $jabatan->updated_at->format('d F Y') }}</span>
+                                        <span>{{ $jabatan->updated_at->locale('id')->translatedFormat('d F Y') }}</span>
                                         <span
                                             class="text-xs text-gray-500">{{ $jabatan->updated_at->format('H:i:s') }}</span>
                                     </div>
@@ -109,7 +109,7 @@
                                         class="text-sm text-gray-900 bg-red-50 px-3 py-2 rounded-md border border-red-200">
                                         <div class="flex flex-col">
                                             <span
-                                                class="text-red-700">{{ $jabatan->deleted_at->format('d F Y') }}</span>
+                                                class="text-red-700">{{ $jabatan->deleted_at->locale('id')->translatedFormat('d F Y') }}</span>
                                             <span
                                                 class="text-xs text-red-500">{{ $jabatan->deleted_at->format('H:i:s') }}</span>
                                         </div>
