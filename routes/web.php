@@ -38,6 +38,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pegawai/create', \App\Livewire\Pegawai\Create::class)->name('pegawai.create');
     Route::get('pegawai/{id}/edit', \App\Livewire\Pegawai\Edit::class)->name('pegawai.edit');
     Route::get('pegawai/{id}', \App\Livewire\Pegawai\Show::class)->name('pegawai.show');
+
+    // Cuti Routes
+    Route::get('cuti', \App\Livewire\Cuti\Index::class)->name('cuti.index');
+    Route::get('cuti/create', \App\Livewire\Cuti\Create::class)->name('cuti.create');
+    Route::get('cuti/{id}/edit', \App\Livewire\Cuti\Edit::class)->name('cuti.edit');
+    Route::get('cuti/{id}', \App\Livewire\Cuti\Show::class)->name('cuti.show');
 });
 
 require __DIR__.'/auth.php';

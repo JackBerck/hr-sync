@@ -17,6 +17,7 @@
                     <flux:navlist.item icon="trophy" :href="route('jabatan.index')" :current="request()->routeIs('jabatan')" wire:navigate>{{ __('Jabatan') }}</flux:navlist.item>
                     <flux:navlist.item icon="briefcase" :href="route('unit-kerja.index')" :current="request()->routeIs('unit-kerja')" wire:navigate>{{ __('Unit Kerja') }}</flux:navlist.item>
                     <flux:navlist.item icon="user" :href="route('pegawai.index')" :current="request()->routeIs('pegawai')" wire:navigate>{{ __('Pegawai') }}</flux:navlist.item>
+                    <flux:navlist.item icon="hand-raised" :href="route('cuti.index')" :current="request()->routeIs('cuti')" wire:navigate>{{ __('Pengajuan Cuti') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
