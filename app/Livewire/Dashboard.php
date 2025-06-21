@@ -25,10 +25,17 @@ class Dashboard extends Component
 
     public function updatedSelectedMonth()
     {
+        // Data akan refresh otomatis
     }
 
     public function updatedSelectedYear()
     {
+        // Data akan refresh otomatis
+    }
+
+    public function getMonthName()
+    {
+        return Carbon::create($this->selectedYear, $this->selectedMonth, 1)->format('F');
     }
 
     public function render()
@@ -108,6 +115,9 @@ class Dashboard extends Component
             ->take(5)
             ->get();
 
+        // Nama bulan untuk ditampilkan
+        $monthName = $this->getMonthName();
+
         return view('livewire.dashboard', compact(
             'totalPegawai',
             'totalJabatan', 
@@ -121,7 +131,8 @@ class Dashboard extends Component
             'topPegawaiAbsensi',
             'chartData',
             'recentAbsensi',
-            'recentCuti'
+            'recentCuti',
+            'monthName'
         ));
     }
 }

@@ -2,266 +2,405 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Header --}}
         <div class="mb-8">
-            <div class="flex items-center space-x-3">
-                <a wire:navigate href="{{ route('absensi.index') }}" 
-                   class="flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-150">
-                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                    Kembali
-                </a>
-            </div>
-            <h1 class="text-3xl font-bold text-gray-900 mt-4">Tambah Absensi</h1>
-            <p class="mt-2 text-gray-600">Catat kehadiran pegawai</p>
-        </div>
-
-        {{-- Form Card --}}
-        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
-            <form wire:submit="save">
-                {{-- Form Header --}}
-                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                    <h2 class="text-lg font-semibold text-gray-900">Formulir Absensi</h2>
-                    <p class="text-sm text-gray-600">Lengkapi informasi kehadiran pegawai</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Absensi Harian</h1>
+                    <p class="mt-2 text-gray-600">Catat kehadiran semua pegawai per hari</p>
                 </div>
-
-                <div class="p-6 space-y-6">
-                    {{-- Pegawai --}}
-                    <div>
-                        <label for="pegawai_id" class="block text-sm font-medium text-gray-700 mb-2">
-                            Pegawai <span class="text-red-500">*</span>
-                        </label>
-                        <select 
-                            id="pegawai_id"
-                            wire:model="pegawai_id"
-                            class="block w-full rounded-lg px-3 py-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('pegawai_id') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
-                        >
-                            <option value="">Pilih pegawai</option>
-                            @foreach($pegawais as $pegawai)
-                                <option value="{{ $pegawai->id }}">
-                                    {{ $pegawai->nama }} ({{ $pegawai->nip }})
-                                    @if($pegawai->jabatan)
-                                        - {{ $pegawai->jabatan->nama_jabatan }}
-                                    @endif
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('pegawai_id')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Tanggal --}}
-                    <div>
-                        <label for="tanggal" class="block text-sm font-medium text-gray-700 mb-2">
-                            Tanggal <span class="text-red-500">*</span>
-                        </label>
-                        <input 
-                            type="date" 
-                            id="tanggal"
-                            wire:model="tanggal"
-                            class="block w-full rounded-lg px-3 py-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('tanggal') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
-                        >
-                        @error('tanggal')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                        <p class="mt-1 text-sm text-gray-500">Pilih tanggal kehadiran</p>
-                    </div>
-
-                    {{-- Status --}}
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Status Kehadiran <span class="text-red-500">*</span>
-                        </label>
-                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                            {{-- Hadir --}}
-                            <label class="relative flex items-center justify-center p-4 border rounded-lg cursor-pointer transition-all duration-200 
-                                   @if($status === 'hadir') 
-                                       border-green-500 bg-green-50 ring-2 ring-green-200 
-                                   @else 
-                                       border-gray-300 hover:border-green-300 hover:bg-green-25 
-                                   @endif">
-                                <input 
-                                    type="radio" 
-                                    wire:model.live="status" 
-                                    value="hadir"
-                                    class="sr-only"
-                                >
-                                <div class="text-center">
-                                    <div class="flex justify-center mb-2">
-                                        <div class="w-8 h-8 rounded-full transition-all duration-200 
-                                                   {{ $status === 'hadir' ? 'bg-green-500 scale-110' : 'bg-gray-300' }} 
-                                                   flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm font-medium transition-colors duration-200 
-                                               {{ $status === 'hadir' ? 'text-green-700' : 'text-gray-700' }}">
-                                        Hadir
-                                    </span>
-                                </div>
-                            </label>
-
-                            {{-- Alpha --}}
-                            <label class="relative flex items-center justify-center p-4 border rounded-lg cursor-pointer transition-all duration-200 
-                                   @if($status === 'alpha') 
-                                       border-red-500 bg-red-50 ring-2 ring-red-200 
-                                   @else 
-                                       border-gray-300 hover:border-red-300 hover:bg-red-25 
-                                   @endif">
-                                <input 
-                                    type="radio" 
-                                    wire:model.live="status" 
-                                    value="alpha"
-                                    class="sr-only"
-                                >
-                                <div class="text-center">
-                                    <div class="flex justify-center mb-2">
-                                        <div class="w-8 h-8 rounded-full transition-all duration-200 
-                                                   {{ $status === 'alpha' ? 'bg-red-500 scale-110' : 'bg-gray-300' }} 
-                                                   flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm font-medium transition-colors duration-200 
-                                               {{ $status === 'alpha' ? 'text-red-700' : 'text-gray-700' }}">
-                                        Alpha
-                                    </span>
-                                </div>
-                            </label>
-
-                            {{-- Sakit --}}
-                            <label class="relative flex items-center justify-center p-4 border rounded-lg cursor-pointer transition-all duration-200 
-                                   @if($status === 'sakit') 
-                                       border-yellow-500 bg-yellow-50 ring-2 ring-yellow-200 
-                                   @else 
-                                       border-gray-300 hover:border-yellow-300 hover:bg-yellow-25 
-                                   @endif">
-                                <input 
-                                    type="radio" 
-                                    wire:model.live="status" 
-                                    value="sakit"
-                                    class="sr-only"
-                                >
-                                <div class="text-center">
-                                    <div class="flex justify-center mb-2">
-                                        <div class="w-8 h-8 rounded-full transition-all duration-200 
-                                                   {{ $status === 'sakit' ? 'bg-yellow-500 scale-110' : 'bg-gray-300' }} 
-                                                   flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm font-medium transition-colors duration-200 
-                                               {{ $status === 'sakit' ? 'text-yellow-700' : 'text-gray-700' }}">
-                                        Sakit
-                                    </span>
-                                </div>
-                            </label>
-
-                            {{-- Izin --}}
-                            <label class="relative flex items-center justify-center p-4 border rounded-lg cursor-pointer transition-all duration-200 
-                                   @if($status === 'izin') 
-                                       border-blue-500 bg-blue-50 ring-2 ring-blue-200 
-                                   @else 
-                                       border-gray-300 hover:border-blue-300 hover:bg-blue-25 
-                                   @endif">
-                                <input 
-                                    type="radio" 
-                                    wire:model.live="status" 
-                                    value="izin"
-                                    class="sr-only"
-                                >
-                                <div class="text-center">
-                                    <div class="flex justify-center mb-2">
-                                        <div class="w-8 h-8 rounded-full transition-all duration-200 
-                                                   {{ $status === 'izin' ? 'bg-blue-500 scale-110' : 'bg-gray-300' }} 
-                                                   flex items-center justify-center">
-                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm font-medium transition-colors duration-200 
-                                               {{ $status === 'izin' ? 'text-blue-700' : 'text-gray-700' }}">
-                                        Izin
-                                    </span>
-                                </div>
-                            </label>
-                        </div>
-                        @error('status')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    {{-- Status Description --}}
-                    @if($status)
-                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                        <h3 class="text-sm font-medium text-gray-900 mb-2">Keterangan Status:</h3>
-                        <div class="text-sm text-gray-700">
-                            @switch($status)
-                                @case('hadir')
-                                    <p>✅ <strong>Hadir:</strong> Pegawai hadir dan bekerja sesuai jadwal.</p>
-                                    @break
-                                @case('alpha')
-                                    <p>❌ <strong>Alpha:</strong> Pegawai tidak hadir tanpa keterangan.</p>
-                                    @break
-                                @case('sakit')
-                                    <p>🏥 <strong>Sakit:</strong> Pegawai tidak hadir karena sakit (dengan/tanpa surat dokter).</p>
-                                    @break
-                                @case('izin')
-                                    <p>📝 <strong>Izin:</strong> Pegawai tidak hadir dengan izin atau keperluan tertentu.</p>
-                                    @break
-                            @endswitch
-                        </div>
-                    </div>
-                    @endif
-                </div>
-
-                {{-- Footer --}}
-                <div class="bg-gray-50 px-6 py-4 flex items-center justify-end space-x-3">
-                    <a wire:navigate href="{{ route('absensi.index') }}" 
-                       class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150">
-                        Batal
-                    </a>
-                    <button 
-                        type="submit"
-                        class="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <div class="flex items-center space-x-3">
+                    <a wire:navigate href="{{ route('absensi.index') }}"
+                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
                         </svg>
-                        <span wire:loading.remove wire:target="save">Simpan Absensi</span>
-                        <span wire:loading wire:target="save">Menyimpan...</span>
-                    </button>
+                        Kembali ke List
+                    </a>
                 </div>
-            </form>
+            </div>
         </div>
 
-        {{-- Info Card --}}
-        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+        {{-- Date Selector & Stats --}}
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+            {{-- Date Selector --}}
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Pilih Tanggal</h3>
+                    <input type="date" wire:model.live="selectedDate"
+                        class="w-full rounded-lg px-3 py-2 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <p class="mt-2 text-sm text-gray-600">{{ $formattedDate }}</p>
                 </div>
-                <div class="ml-3">
-                    <h3 class="text-sm font-medium text-blue-800">
-                        Informasi Penting
-                    </h3>
-                    <div class="mt-2 text-sm text-blue-700">
-                        <ul class="list-disc list-inside space-y-1">
-                            <li>Pastikan pegawai dan tanggal sudah benar sebelum menyimpan</li>
-                            <li>Setiap pegawai hanya dapat memiliki satu absensi per hari</li>
-                            <li>Status absensi dapat diubah setelah disimpan melalui menu edit</li>
-                            <li>Data absensi akan tercatat dengan timestamp saat ini</li>
-                        </ul>
+            </div>
+
+            {{-- Quick Stats --}}
+            <div class="lg:col-span-3">
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                    <div class="bg-white rounded-lg shadow-sm border p-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-500">Hadir</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ $stats['hadir'] }}</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border p-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-500">Alpha</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ $stats['alpha'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border p-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-500">Sakit</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ $stats['sakit'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border p-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-500">Izin</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ $stats['izin'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Quick Actions --}}
+        <div class="bg-white rounded-lg shadow-sm border p-6 mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Aksi Cepat</h3>
+            <div class="flex flex-wrap gap-3">
+                <button wire:click="markAllAs('hadir')"
+                    class="inline-flex items-center px-3 py-2 border border-green-300 rounded-lg text-sm font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    Tandai Semua Hadir
+                </button>
+                <button wire:click="markAllAs('alpha')"
+                    class="inline-flex items-center px-3 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                    Tandai Semua Alpha
+                </button>
+                <button wire:click="clearAll"
+                    class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-150">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                        </path>
+                    </svg>
+                    Bersihkan Semua
+                </button>
+            </div>
+        </div>
+
+        {{-- Absensi Form --}}
+        <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900">Daftar Pegawai</h2>
+                        <p class="text-sm text-gray-600">Total: {{ count($pegawais) }} pegawai | Sudah diabsen:
+                            {{ $stats['total'] }}</p>
+                    </div>
+                </div>
+            </div>
+
+            @if (count($pegawais) > 0)
+                <form wire:submit="saveAbsensi">
+                    <div class="overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Pegawai
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Jabatan
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Unit Kerja
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status Kehadiran
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach ($pegawais as $pegawai)
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <div
+                                                            class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                                            <span class="text-sm font-medium text-gray-700">
+                                                                {{ strtoupper(substr($pegawai->nama, 0, 2)) }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">
+                                                            {{ $pegawai->nama }}</div>
+                                                        <div class="text-sm text-gray-500">{{ $pegawai->nip }}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $pegawai->jabatan->nama_jabatan ?? '-' }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">
+                                                    {{ $pegawai->unitKerja->nama_unit ?? '-' }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-center">
+                                                <div class="flex justify-center space-x-2">
+                                                    {{-- Hadir --}}
+                                                    <label class="relative inline-flex items-center">
+                                                        <input type="radio"
+                                                            wire:model.live="absensis.{{ $pegawai->id }}"
+                                                            value="hadir" class="sr-only">
+                                                        <div
+                                                            class="w-8 h-8 rounded-full border-2 cursor-pointer transition-all duration-200 flex items-center justify-center
+                                                                   {{ ($absensis[$pegawai->id] ?? '') === 'hadir'
+                                                                       ? 'border-green-500 bg-green-500 scale-110'
+                                                                       : 'border-gray-300 hover:border-green-400' }}">
+                                                            <svg class="w-5 h-5 {{ ($absensis[$pegawai->id] ?? '') === 'hadir' ? 'text-white' : 'text-gray-400' }}"
+                                                                fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                                    clip-rule="evenodd"></path>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+
+                                                    {{-- Alpha --}}
+                                                    <label class="relative inline-flex items-center">
+                                                        <input type="radio"
+                                                            wire:model.live="absensis.{{ $pegawai->id }}"
+                                                            value="alpha" class="sr-only">
+                                                        <div
+                                                            class="w-8 h-8 rounded-full border-2 cursor-pointer transition-all duration-200 flex items-center justify-center
+                                                                   {{ ($absensis[$pegawai->id] ?? '') === 'alpha'
+                                                                       ? 'border-red-500 bg-red-500 scale-110'
+                                                                       : 'border-gray-300 hover:border-red-400' }}">
+                                                            <svg class="w-5 h-5 {{ ($absensis[$pegawai->id] ?? '') === 'alpha' ? 'text-white' : 'text-gray-400' }}"
+                                                                fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+
+                                                    {{-- Sakit --}}
+                                                    <label class="relative inline-flex items-center">
+                                                        <input type="radio"
+                                                            wire:model.live="absensis.{{ $pegawai->id }}"
+                                                            value="sakit" class="sr-only">
+                                                        <div
+                                                            class="w-8 h-8 rounded-full border-2 cursor-pointer transition-all duration-200 flex items-center justify-center
+                                                                   {{ ($absensis[$pegawai->id] ?? '') === 'sakit'
+                                                                       ? 'border-yellow-500 bg-yellow-500 scale-110'
+                                                                       : 'border-gray-300 hover:border-yellow-400' }}">
+                                                            <svg class="w-5 h-5 {{ ($absensis[$pegawai->id] ?? '') === 'sakit' ? 'text-white' : 'text-gray-400' }}"
+                                                                fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                                                </path>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+
+                                                    {{-- Izin --}}
+                                                    <label class="relative inline-flex items-center">
+                                                        <input type="radio"
+                                                            wire:model.live="absensis.{{ $pegawai->id }}"
+                                                            value="izin" class="sr-only">
+                                                        <div
+                                                            class="w-8 h-8 rounded-full border-2 cursor-pointer transition-all duration-200 flex items-center justify-center
+                                                                   {{ ($absensis[$pegawai->id] ?? '') === 'izin'
+                                                                       ? 'border-blue-500 bg-blue-500 scale-110'
+                                                                       : 'border-gray-300 hover:border-blue-400' }}">
+                                                            <svg class="w-5 h-5 {{ ($absensis[$pegawai->id] ?? '') === 'izin' ? 'text-white' : 'text-gray-400' }}"
+                                                                fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                                </path>
+                                                            </svg>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                                <div class="mt-2 text-xs text-gray-500">
+                                                    @switch($absensis[$pegawai->id] ?? '')
+                                                        @case('hadir')
+                                                            <span class="text-green-600 font-medium">Hadir</span>
+                                                        @break
+
+                                                        @case('alpha')
+                                                            <span class="text-red-600 font-medium">Alpha</span>
+                                                        @break
+
+                                                        @case('sakit')
+                                                            <span class="text-yellow-600 font-medium">Sakit</span>
+                                                        @break
+
+                                                        @case('izin')
+                                                            <span class="text-blue-600 font-medium">Izin</span>
+                                                        @break
+
+                                                        @default
+                                                            <span class="text-gray-400">Belum diabsen</span>
+                                                    @endswitch
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {{-- Footer --}}
+                    <div class="bg-gray-50 px-6 py-4 flex items-center justify-between">
+                        <div class="text-sm text-gray-600">
+                            <span class="font-medium">{{ $stats['total'] }}</span> dari <span
+                                class="font-medium">{{ count($pegawais) }}</span> pegawai sudah diabsen
+                        </div>
+                        <button type="submit"
+                            class="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <svg wire:loading wire:target="saveAbsensi"
+                                class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none"
+                                viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                    stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            <span wire:loading.remove wire:target="saveAbsensi">Simpan Absensi</span>
+                            <span wire:loading wire:target="saveAbsensi">Menyimpan...</span>
+                        </button>
+                    </div>
+                </form>
+            @else
+                <div class="text-center py-12">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada pegawai</h3>
+                    <p class="mt-1 text-sm text-gray-500">Tambahkan pegawai terlebih dahulu untuk dapat mencatat
+                        absensi.</p>
+                </div>
+            @endif
+        </div>
+
+        {{-- Legend --}}
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="text-sm font-medium text-blue-800 mb-3">Keterangan:</h3>
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                <div class="flex items-center">
+                    <div class="w-6 h-6 bg-green-500 rounded-full mr-2 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <span class="text-sm text-blue-700">Hadir</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-6 h-6 bg-red-500 rounded-full mr-2 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <span class="text-sm text-blue-700">Alpha (Tanpa Keterangan)</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-6 h-6 bg-yellow-500 rounded-full mr-2 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text-sm text-blue-700">Sakit</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-6 h-6 bg-blue-500 rounded-full mr-2 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-sm text-blue-700">Izin</span>
                 </div>
             </div>
         </div>
