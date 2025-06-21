@@ -162,9 +162,6 @@
         </div>
     </div>
 
-    {{-- Show Jabatans Raw Data --}}
-    {{ $jabatans->toJson() }}
-
     {{-- Show Delete Confirmation Modal --}}
 
     {{-- Delete Confirmation Modal --}}
