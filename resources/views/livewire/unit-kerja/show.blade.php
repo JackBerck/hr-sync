@@ -174,7 +174,7 @@
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                 <div>
                                     <p class="text-sm font-medium text-gray-900">Dibuat</p>
-                                    <p class="text-sm text-gray-600">{{ $unitKerja->created_at->diffForHumans() }}</p>
+                                    <p class="text-sm text-gray-600">{{ $unitKerja->created_at->locale('id')->translatedformat('d F Y H:i') }}</p>
                                 </div>
                                 <div class="p-3 bg-gray-600 rounded-full">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"

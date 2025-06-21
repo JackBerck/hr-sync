@@ -29,6 +29,26 @@ class Edit extends Component
     #[Validate('required|numeric|min:0')]
     public $gaji = '';
 
+    protected function messages()
+    {
+        return [
+            'nama.required' => 'Nama pegawai wajib diisi.',
+            'nama.string' => 'Nama pegawai harus berupa teks.',
+            'nama.max' => 'Nama pegawai tidak boleh lebih dari 255 karakter.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.string' => 'NIP harus berupa teks.',
+            'nip.max' => 'NIP tidak boleh lebih dari 20 karakter.',
+            'nip.unique' => 'NIP sudah ada.',
+            'jabatan_id.required' => 'Jabatan wajib dipilih.',
+            'jabatan_id.exists' => 'Jabatan yang dipilih tidak valid.',
+            'unit_kerja_id.required' => 'Unit kerja wajib dipilih.',
+            'unit_kerja_id.exists' => 'Unit kerja yang dipilih tidak valid.',
+            'gaji.required' => 'Gaji wajib diisi.',
+            'gaji.numeric' => 'Gaji harus berupa angka.',
+            'gaji.min' => 'Gaji minimal 0.',
+        ];
+    }
+
     public function mount($id)
     {
         $this->pegawai = Pegawai::with(['jabatan', 'unitKerja'])->findOrFail($id);

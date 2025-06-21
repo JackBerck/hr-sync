@@ -193,7 +193,7 @@
                                 <div class="text-sm text-gray-900">
                                     {{ $absensi->tanggal->locale('id')->translatedFormat('d F Y') }}
                                 </div>
-                                <div class="text-sm text-gray-500">{{ $absensi->tanggal->format('l') }}</div>
+                                <div class="text-sm text-gray-500">{{ $absensi->tanggal->locale('id')->translatedFormat('l') }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @switch($absensi->status)

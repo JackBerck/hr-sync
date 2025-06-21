@@ -125,7 +125,7 @@
                                 <dd class="text-sm text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
                                     <div class="flex flex-col">
                                         <span>{{ $absensi->tanggal->locale('id')->translatedFormat('d F Y') }}</span>
-                                        <span class="text-xs text-gray-500">{{ $absensi->tanggal->format('l') }}</span>
+                                        <span class="text-xs text-gray-500">{{ $absensi->tanggal->locale('id')->translatedFormat('l') }}</span>
                                     </div>
                                 </dd>
                             </div>
@@ -259,7 +259,7 @@
                 {{-- Statistik Bulan Ini --}}
                 <div class="bg-white rounded-lg shadow-sm border overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-semibold text-gray-900">Statistik {{ now()->format('F Y') }}</h2>
+                        <h2 class="text-lg font-semibold text-gray-900">Statistik {{ now()->locale('id')->translatedFormat('F Y') }}</h2>
                         <p class="text-sm text-gray-600">Rekap kehadiran {{ $absensi->pegawai->nama }}</p>
                     </div>
                     <div class="p-6">

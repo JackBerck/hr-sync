@@ -35,7 +35,7 @@ class Dashboard extends Component
 
     public function getMonthName()
     {
-        return Carbon::create($this->selectedYear, $this->selectedMonth, 1)->format('F');
+        return Carbon::create($this->selectedYear, $this->selectedMonth, 1)->locale('id')->translatedFormat('F');
     }
 
     public function render()
@@ -83,9 +83,9 @@ class Dashboard extends Component
 
         // Top 5 pegawai dengan absensi terbanyak bulan ini
         $topPegawaiAbsensi = Pegawai::withCount(['absensis' => function ($query) {
-                $query->whereYear('tanggal', $this->selectedYear)
-                    ->whereMonth('tanggal', $this->selectedMonth);
-            }])
+            $query->whereYear('tanggal', $this->selectedYear)
+                ->whereMonth('tanggal', $this->selectedMonth);
+        }])
             ->having('absensis_count', '>', 0)
             ->orderByDesc('absensis_count')
             ->take(5)
@@ -120,7 +120,7 @@ class Dashboard extends Component
 
         return view('livewire.dashboard', compact(
             'totalPegawai',
-            'totalJabatan', 
+            'totalJabatan',
             'totalUnitKerja',
             'absensiHariIni',
             'totalAbsensiHariIni',

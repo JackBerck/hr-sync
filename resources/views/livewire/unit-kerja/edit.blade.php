@@ -164,11 +164,13 @@
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Dibuat Pada</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $unitKerja->created_at->format('d F Y H:i') }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900">
+                            {{ $unitKerja->created_at->locale('id')->translatedformat('d F Y H:i') }}</dd>
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Terakhir Diupdate</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $unitKerja->updated_at->format('d F Y H:i') }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900">
+                            {{ $unitKerja->updated_at->locale('id')->translatedformat('d F Y H:i') }}</dd>
                     </div>
                 </dl>
             </div>

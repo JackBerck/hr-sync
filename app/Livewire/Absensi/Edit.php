@@ -22,6 +22,18 @@ class Edit extends Component
     #[Validate('required|in:hadir,alpha,sakit,izin')]
     public $status = '';
 
+    protected function messages()
+    {
+        return [
+            'pegawai_id.required' => 'Pegawai wajib dipilih.',
+            'pegawai_id.exists' => 'Pegawai yang dipilih tidak valid.',
+            'tanggal.required' => 'Tanggal wajib diisi.',
+            'tanggal.date' => 'Tanggal harus berupa tanggal yang valid.',
+            'status.required' => 'Status absensi wajib diisi.',
+            'status.in' => 'Status absensi harus salah satu dari: hadir, alpha, sakit, izin.',
+        ];
+    }
+
     public function mount($id)
     {
         $this->absensi = Absensi::with(['pegawai.jabatan', 'pegawai.unitKerja'])->findOrFail($id);

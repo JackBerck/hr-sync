@@ -18,6 +18,19 @@ class Edit extends Component
     #[Validate('required|numeric|min:0')]
     public $tunjangan = '';
 
+    protected function messages()
+    {
+        return [
+            'nama_jabatan.required' => 'Nama jabatan wajib diisi.',
+            'nama_jabatan.string' => 'Nama jabatan harus berupa teks.',
+            'nama_jabatan.max' => 'Nama jabatan tidak boleh lebih dari 255 karakter.',
+            'nama_jabatan.unique' => 'Nama jabatan sudah ada.',
+            'tunjangan.required' => 'Tunjangan wajib diisi.',
+            'tunjangan.numeric' => 'Tunjangan harus berupa angka.',
+            'tunjangan.min' => 'Tunjangan minimal 0.',
+        ];
+    }
+
     public function mount($id)
     {
         $this->jabatan = Jabatan::findOrFail($id);

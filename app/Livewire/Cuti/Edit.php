@@ -26,6 +26,22 @@ class Edit extends Component
     #[Validate('required|string|min:10')]
     public $alasan = '';
 
+    protected function messages()
+    {
+        return [
+            'pegawai_id.required' => 'Pegawai wajib dipilih.',
+            'pegawai_id.exists' => 'Pegawai yang dipilih tidak valid.',
+            'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
+            'tanggal_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
+            'tanggal_akhir.required' => 'Tanggal akhir wajib diisi.',
+            'tanggal_akhir.date' => 'Tanggal akhir harus berupa tanggal yang valid.',
+            'tanggal_akhir.after_or_equal' => 'Tanggal akhir harus setelah atau sama dengan tanggal mulai.',
+            'alasan.required' => 'Alasan cuti wajib diisi.',
+            'alasan.string' => 'Alasan cuti harus berupa teks.',
+            'alasan.min' => 'Alasan cuti minimal 10 karakter.',
+        ];
+    }
+
     public function mount($id)
     {
         $this->cuti = Cuti::with(['pegawai.jabatan', 'pegawai.unitKerja'])->findOrFail($id);

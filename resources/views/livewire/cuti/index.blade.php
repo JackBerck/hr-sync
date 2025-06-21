@@ -219,8 +219,8 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">
-                                            {{ $cuti->tanggal_mulai->format('d M Y') }} -
-                                            {{ $cuti->tanggal_akhir->format('d M Y') }}
+                                            {{ $cuti->tanggal_mulai->locale('id')->translatedformat('d M Y') }} -
+                                            {{ $cuti->tanggal_akhir->locale('id')->translatedformat('d M Y') }}
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             {{ $cuti->tanggal_mulai->format('l') }} -

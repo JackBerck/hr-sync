@@ -24,6 +24,23 @@ class Create extends Component
     #[Validate('required|string|min:10')]
     public $alasan = '';
 
+    protected function messages()
+    {
+        return [
+            'pegawai_id.required' => 'Pegawai wajib dipilih.',
+            'pegawai_id.exists' => 'Pegawai yang dipilih tidak valid.',
+            'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
+            'tanggal_mulai.date' => 'Tanggal mulai harus berupa tanggal yang valid.',
+            'tanggal_mulai.after_or_equal' => 'Tanggal mulai tidak boleh sebelum hari ini.',
+            'tanggal_akhir.required' => 'Tanggal akhir wajib diisi.',
+            'tanggal_akhir.date' => 'Tanggal akhir harus berupa tanggal yang valid.',
+            'tanggal_akhir.after_or_equal' => 'Tanggal akhir harus setelah atau sama dengan tanggal mulai.',
+            'alasan.required' => 'Alasan cuti wajib diisi.',
+            'alasan.string' => 'Alasan cuti harus berupa teks.',
+            'alasan.min' => 'Alasan cuti minimal 10 karakter.',
+        ];
+    }
+
     public function save()
     {
         $this->validate();

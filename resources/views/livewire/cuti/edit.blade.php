@@ -271,11 +271,13 @@
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Dibuat Pada</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $cuti->created_at->format('d F Y H:i') }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900">
+                            {{ $cuti->created_at->locale('id')->translatedFormat('d F Y H:i') }}</dd>
                     </div>
                     <div>
                         <dt class="text-sm font-medium text-gray-500">Terakhir Diupdate</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $cuti->updated_at->format('d F Y H:i') }}</dd>
+                        <dd class="mt-1 text-sm text-gray-900">
+                            {{ $cuti->updated_at->locale('id')->translatedFormat('d F Y H:i') }}</dd>
                     </div>
                 </dl>
             </div>

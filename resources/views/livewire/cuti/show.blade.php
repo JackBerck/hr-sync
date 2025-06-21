@@ -80,7 +80,7 @@
                                     <div class="flex flex-col">
                                         <span>{{ $cuti->tanggal_mulai->locale('id')->translatedFormat('d F Y') }}</span>
                                         <span
-                                            class="text-xs text-gray-500">{{ $cuti->tanggal_mulai->format('l') }}</span>
+                                            class="text-xs text-gray-500">{{ $cuti->tanggal_mulai->locale('id')->translatedFormat('l') }}</span>
                                     </div>
                                 </dd>
                             </div>
@@ -90,7 +90,7 @@
                                     <div class="flex flex-col">
                                         <span>{{ $cuti->tanggal_akhir->locale('id')->translatedFormat('d F Y') }}</span>
                                         <span
-                                            class="text-xs text-gray-500">{{ $cuti->tanggal_akhir->format('l') }}</span>
+                                            class="text-xs text-gray-500">{{ $cuti->tanggal_akhir->locale('id')->translatedFormat('l') }}</span>
                                     </div>
                                 </dd>
                             </div>

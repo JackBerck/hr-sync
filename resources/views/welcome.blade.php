@@ -39,17 +39,17 @@
                 @if (Route::has('login'))
                     <div class="flex items-center space-x-4">
                         @auth
-                            <a href="{{ url('/dashboard') }}"
+                            <a wire:navigate href="{{ url('/dashboard') }}"
                                 class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                                 Dashboard
                             </a>
                         @else
-                            <a href="{{ route('login') }}"
+                            <a wire:navigate href="{{ route('login') }}"
                                 class="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
                                 Masuk
                             </a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}"
+                                <a wire:navigate href="{{ route('register') }}"
                                     class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                                     Daftar
                                 </a>
@@ -85,16 +85,16 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     @auth
-                        <a href="{{ url('/dashboard') }}"
+                        <a wire:navigate href="{{ url('/dashboard') }}"
                             class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-blue-700 transition-colors">
                             Buka Dashboard
                         </a>
                     @else
-                        <a href="{{ route('register') }}"
+                        <a wire:navigate href="{{ route('register') }}"
                             class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-blue-700 transition-colors">
                             Mulai Gratis
                         </a>
-                        <a href="{{ route('login') }}"
+                        <a wire:navigate href="{{ route('login') }}"
                             class="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-medium hover:bg-gray-50 transition-colors">
                             Masuk
                         </a>
@@ -394,7 +394,7 @@
                         </li>
                         <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">Tentang</a>
                         </li>
-                        <li><a href="{{ route('login') }}"
+                        <li><a wire:navigate href="{{ route('login') }}"
                                 class="text-gray-400 hover:text-white transition-colors">Login</a></li>
                     </ul>
                 </div>
